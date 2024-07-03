@@ -1,0 +1,37 @@
+Given a value N, if we want to make a change for Rs N and we have an infinite supply of each of the denominations in Indian currency.
+That is, we have an infinite supply of {1, 2, 5, 10, 20, 50, 100, 500, 1000} valued coins/notes. What is the minimum number of coins 
+and/or notes needed to make the change?
+
+SOLUTION:
+
+import java.util.Vector;
+import java.util.Scanner;
+class Main
+{
+  static int[] deno = {1, 2, 5, 10, 20, 50, 100, 500, 1000};
+  static int n = deno.length;
+  
+  static void findMin(int V){
+    Vector<Integer> res = new Vector<>();
+    
+    for(int i = n-1; i>=0; i--){
+      while( V >= deno[i]){
+        V = V - deno[i];
+        res.add(deno[i]);
+      }
+    }
+    
+    for(int i = 0; i<res.size(); i++){
+      System.out.print(res.elementAt(i) + "  ");
+    }
+  }
+    
+  public static void main(String args[])
+  {
+    //Try out your code here
+    Scanner s = new Scanner(System.in);
+    int v = s.nextInt();
+   
+    findMin(v);
+  }
+}
