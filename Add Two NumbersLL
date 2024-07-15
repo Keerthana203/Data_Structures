@@ -1,0 +1,45 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);     // creatimg a new dummy node as head(which has a value 0)
+        ListNode ptr = result;                 // assigning a pointer to the result node to traverse for list building 
+
+        int carry = 0; // initializing carry as 0
+
+        while(l1 != null || l2 != null){       // chk if l1 and l2 are not 0
+            int sum = 0 + carry;               // assign sum = 0+ carry - each iteration, carry should be 
+                                              //added to the sum, so it is inside the loop.
+
+            if(l1 != null){ 
+                sum = sum + l1.val;           // add l1 value to sum
+                l1 = l1.next;                 // change the pointer to next val
+            }
+
+            if(l2 != null){
+                sum = sum + l2.val;           // add l2 val to sum(included l1)
+                l2 = l2.next;                 // change the pointer to next val
+            }
+
+           carry = sum / 10;                  // to get carry(quotient)
+           sum = sum % 10;                   // to get actual value for adding(remainder)
+           ptr.next = new ListNode(sum);     // this creates another node with the value of sum - next node for sum
+                      
+           ptr = ptr.next;                   // points to the next node, so that the next value will be stored after the current
+                                              // sum of result(ref of likedlist- starting point for creating a list)        
+        }
+
+        if(carry==1){                         // finally if the carry is 1
+            ptr.next = new ListNode(1);        // create a node of list with value 1
+        }
+        return result.next;                     //return the full LL starting from the 2nd node, as 1st node is dummy(which is 0)
+    }
+}
