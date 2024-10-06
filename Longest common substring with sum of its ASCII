@@ -1,0 +1,44 @@
+Longest common substring with sum of its ASCII values using Dynamic Programming
+
+
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        String str1 = "apple";
+        String str2 = "ape";
+        System.out.println(LongSubstring(str1, str2));
+
+    }
+    public static int LongSubstring(String str1, String str2){
+        char[] ch1 = str1.toCharArray();
+        char[] ch2 = str2.toCharArray();
+
+        int[][] dp = new int[ch1.length+1][ch2.length+1]; // creating dp 2D array with len + 1 
+        int max = 0;
+        int endIndex = 0;
+        for(int i = 1; i <= ch1.length; i++){
+            for(int j = 1; j <= ch2.length; j++){
+                if(ch1[i-1] == ch2[j-1]){ // chk for matching char
+                    dp[i][j] = dp[i-1][j-1] + 1; // incrementing the value by 1 
+                    if(dp[i][j] > max){
+                        max = dp[i][j]; // get the max length of substring
+                        endIndex = i; // get the end index of the max string
+                    }
+                }
+            }
+        }
+        String Lcs = str1.substring(endIndex - max, endIndex); // get the substring(startIndex, endIndex)
+        int sum = 0;
+        for(int i = 0; i < Lcs.length(); i++){
+            sum += (int) Lcs.charAt(i); // this (int) cast into character's ASCII value and sum it.
+        }
+        return sum;
+    }
+}
+
+input:
+str1 = apple
+str2 = ape
+
+output:
+209 // 97 + 112 - longest common substring - (ap)
