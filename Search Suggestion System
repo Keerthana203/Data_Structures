@@ -1,0 +1,33 @@
+class Solution {
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        List<List<String>> res = new ArrayList<>(); // to store the output
+
+        Arrays.sort(products);
+
+        TreeMap<String, Integer> map = new TreeMap<>(); // to do all functions for search
+
+        List<String> list = Arrays.asList(products);
+        for(int i = 0; i < products.length; i++){
+            map.put(products[i], i);
+        }
+
+        String key = "";
+        for(char c : searchWord.toCharArray()){
+            key += c;
+            String from = map.ceilingKey(key);
+            String to = map.floorKey(key + Character.MAX_VALUE); // MAX_VALUE or "~" both func as same
+
+            if(from == null || to == null) break;
+
+            //going to get the index for slicing the list
+            int fromIndex = map.get(from);
+            int toIndex = map.get(to);
+
+            res.add(list.subList(fromIndex, Math.min(fromIndex+3, toIndex+1)));
+        }
+        while(res.size() < searchWord.length()){
+                res.add(new ArrayList<>()); //returns empty list per iteration, if value not available
+        }
+        return res;
+    }
+}
